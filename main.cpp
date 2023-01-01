@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <fstream>
 
 using namespace std;
 
@@ -17,34 +18,32 @@ void initialOutputScreen(char outputElements[][85]);
 
 void initialGlassState(GlassState glasses[][30]);
 // pass in array must be 2 or it won't work
-// pass in
+// pass in blank array, and it will auto assign GlassStates to every elements of glasses
 
+void showGlassState(const GlassState glasses[][30], ostream& outputDevice = cout);
+// show glasses' GlassState on an output device, default is the screen(cout)
+
+void showScreen(const char outputElements[][85]);
+// show output elements on the screen
 
 
 int main()
 {
+    // Stores glasses data
     GlassState glasses[2][30];
-
+    // placing glasses on the bridge
     initialGlassState(glasses);
-    for (int yIndex = 0; yIndex < 2; yIndex++)
-    {
-        for (int xIndex = 0; xIndex < 30; xIndex++)
-        {
-            cout << glasses[yIndex][xIndex] << " ";
-        }
-        cout << endl;
-    }
+    // printing out glasses data
+    showGlassState(glasses);
 
-    char outputScreen[15][85];
+    // outputScreen : Stores characters ready to be displayed on the screen
+    char outputElements[15][85];
+    // constructing the screen
+    initialOutputScreen(outputElements);
+    // show the screen
+    showScreen(outputElements);
 
-    initialOutputScreen(outputScreen);
 
-    for (int yOutputScreenIndex = 0; yOutputScreenIndex < 15; yOutputScreenIndex++)
-    {
-        for (int xOutputScreenIndex = 0; xOutputScreenIndex < 85; xOutputScreenIndex++)
-            cout << outputScreen[yOutputScreenIndex][xOutputScreenIndex];
-        cout << endl;
-    }//輸出畫面
 }
 
 void initialGlassState(GlassState glasses[][30])
@@ -97,7 +96,7 @@ void initialOutputScreen(char outputElements[][85])
 
     outputElements[7][3] = 'S';
     outputElements[7][4] = 'T';
-    outputElements[7][5] = 'outputElements';
+    outputElements[7][5] = 'A';
     outputElements[7][6] = 'R';
     outputElements[7][7] = 'T';//start文字
 
@@ -123,5 +122,26 @@ void initialOutputScreen(char outputElements[][85])
         outputElements[8][i] = '|';
     for (int i = 13; i < 74; i++)
         outputElements[9][i] = '-';//玻璃橋設置
+}
 
+void showGlassState(const GlassState glasses[][30], ostream& outputDevice)
+{
+    for (int yIndex = 0; yIndex < 2; yIndex++)
+    {
+        for (int xIndex = 0; xIndex < 30; xIndex++)
+        {
+            outputDevice << glasses[yIndex][xIndex] << " ";
+        }
+        outputDevice << endl;
+    }
+}
+
+void showScreen(const char outputElements[][85])
+{
+    for (int yOutputScreenIndex = 0; yOutputScreenIndex < 15; yOutputScreenIndex++)
+    {
+        for (int xOutputScreenIndex = 0; xOutputScreenIndex < 85; xOutputScreenIndex++)
+            cout << outputElements[yOutputScreenIndex][xOutputScreenIndex];
+        cout << endl;
+    }//輸出畫面
 }
