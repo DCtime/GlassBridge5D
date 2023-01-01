@@ -26,6 +26,10 @@ void showGlassState(const GlassState glasses[][30], ostream& outputDevice = cout
 void showScreen(const char outputElements[][85]);
 // show output elements on the screen
 
+void updateOutputElements(const GlassState glasses[][30], char outputElements[][85]);
+// update outputElements array by glasses'states
+// BROKEN -> X
+
 
 int main()
 {
@@ -33,6 +37,7 @@ int main()
     GlassState glasses[2][30];
     // placing glasses on the bridge
     initialGlassState(glasses);
+    glasses[0][5] = BROKEN;
     // printing out glasses data
     showGlassState(glasses);
 
@@ -40,6 +45,7 @@ int main()
     char outputElements[15][85];
     // constructing the screen
     initialOutputScreen(outputElements);
+    updateOutputElements(glasses, outputElements);
     // show the screen
     showScreen(outputElements);
 
@@ -144,4 +150,18 @@ void showScreen(const char outputElements[][85])
             cout << outputElements[yOutputScreenIndex][xOutputScreenIndex];
         cout << endl;
     }//¿é¥Xµe­±
+}
+
+void updateOutputElements(const GlassState glasses[][30], char outputElements[][85])
+{
+    for (int glassesYIndex = 0; glassesYIndex < 30; glassesYIndex++)
+    {
+        for (int glassesXIndex = 0; glassesXIndex < 30; glassesXIndex++)
+        {
+            if (glasses[glassesYIndex][glassesXIndex] == BROKEN)
+            {
+                outputElements[6+2*glassesYIndex][14+2*glassesXIndex] = 'X';
+            }
+        }
+    }
 }
